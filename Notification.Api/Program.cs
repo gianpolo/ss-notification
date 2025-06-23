@@ -3,6 +3,7 @@ using Dapr;
 using Dapr.Client;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
+using SS.Services.Notification.Api.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
@@ -43,12 +44,21 @@ public class NotificationController : ControllerBase
         _logger = logger;
     }
 
-    [HttpPost("/notifications")] 
-    [Topic("pubsub", "notifications")] 
+    [HttpPost("/notifications")]
+    [Topic("pubsub", "notifications")]
     public async Task<IActionResult> ReceiveNotification([FromBody] object payload)
     {
         await _hubContext.Clients.All.SendAsync("ReceiveNotification", payload);
         _logger.LogInformation("Notification sent to clients via SignalR.");
+        return Ok();
+    }
+
+    [HttpPost("/events/basket-item-added")]
+    [Topic("pubsub", "BasketItemAddedIntegrationEvent")]
+    public async Task<IActionResult> OnBasketItemAdded([FromBody] BasketItemAddedIntegrationEvent @event)
+    {
+        await _hubContext.Clients.All.SendAsync("BasketItemAdded", @event);
+        _logger.LogInformation("Basket item added event forwarded to SignalR clients.");
         return Ok();
     }
 }
