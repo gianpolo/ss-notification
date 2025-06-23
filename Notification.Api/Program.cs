@@ -5,8 +5,19 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("https://localhost:4000")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
 builder.Services.AddControllers().AddDapr();
+
+
 builder.Services.AddSignalR();
 
 var app = builder.Build();
@@ -14,8 +25,8 @@ var app = builder.Build();
 app.UseCloudEvents();
 app.MapSubscribeHandler();
 app.MapControllers();
-app.MapHub<NotificationHub>("/notifications");
-
+app.MapHub<NotificationHub>("/hubs/notifications");
+app.UseCors();
 app.Run();
 
 public class NotificationHub : Hub { }
