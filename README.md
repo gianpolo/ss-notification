@@ -1,5 +1,5 @@
-# SS Notification Solution
+# Microservices Solution
 
-This repository contains a .NET 9 Web API project used for sending SignalR notifications via Dapr events. The project is included in the `Notification.sln` solution file.
+This repository now contains multiple .NET 9 Web API microservices. `Notification.Api` and `Orders.Api` both use Dapr and SignalR for messaging. The projects are included in the `microservices.sln` solution file.
 
-Open `Notification.sln` with Visual Studio 2022 or later to work with the service.
+Open `microservices.sln` with Visual Studio 2022 or later to work with the services.

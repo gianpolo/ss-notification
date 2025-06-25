@@ -3,7 +3,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>Microservices.Notification.Api</RootNamespace>
+    <RootNamespace>Microservices.Orders.Api</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Dapr.AspNetCore" Version="1.12.0" />
