@@ -24,20 +24,20 @@ app.UseCors();
 app.Run();
 
 [ApiController]
-public class OrderController : ControllerBase
+public class BasketController : ControllerBase
 {
-    private readonly ILogger<OrderController> _logger;
+    private readonly ILogger<BasketController> _logger;
 
-    public OrderController(ILogger<OrderController> logger)
+    public BasketController(ILogger<BasketController> logger)
     {
         _logger = logger;
     }
 
-    [HttpPost("/orders")]
-    [Topic("pubsub", "orders")]
-    public async Task<IActionResult> ReceiveOrder([FromBody] object payload)
+    [HttpPost("/baskets")]
+    [Topic("pubsub", "baskets")]
+    public async Task<IActionResult> ReceiveBasket([FromBody] object payload)
     {
-        _logger.LogInformation("Order received.");
+        _logger.LogInformation("Basket received.");
         return Ok();
     }
 }
